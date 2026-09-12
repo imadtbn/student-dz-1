@@ -1,0 +1,75 @@
+/* Shared responsive rules for every Student DZ page. */
+@media (max-width: 768px) {
+    .site-header {
+        position: fixed;
+        inset: 0;
+        height: 0;
+        background: transparent;
+        box-shadow: none;
+        pointer-events: none;
+        z-index: 2000;
+    }
+
+    .site-header .container {
+        height: 0;
+        padding: 0;
+        max-width: none;
+    }
+
+    .site-header .logo,
+    .site-header .icon-btn {
+        display: none;
+    }
+
+    .header-actions {
+        position: static;
+        display: block;
+    }
+
+    .hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        width: 46px;
+        height: 46px;
+        padding: 0;
+        border-radius: 12px;
+        background: var(--bg-card);
+        color: var(--text-main);
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+        pointer-events: auto;
+        z-index: 2002;
+        font-size: 1.35rem;
+    }
+
+    .main-nav {
+        display: none;
+        position: fixed;
+        top: 68px;
+        right: 12px;
+        left: 12px;
+        max-height: calc(100vh - 84px);
+        overflow-y: auto;
+        flex-direction: column;
+        gap: 0;
+        padding: 8px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        box-shadow: var(--shadow-lg);
+        pointer-events: auto;
+        z-index: 2001;
+    }
+
+    .main-nav.active { display: flex; }
+    .main-nav .nav-link { padding: 12px 14px; border-radius: 10px; }
+    .main-nav .nav-link:hover { background: var(--bg-main); }
+
+    .hero h1 { font-size: 2rem; }
+    .hero p { font-size: 1rem; }
+    .grid { grid-template-columns: 1fr !important; }
+}

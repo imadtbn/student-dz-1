@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء QR Code - Student DZ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="../assets/js/config.js"></script>
+    <style>
+        .tool-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-size: 1.1rem;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        #qrcode {
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: fit-content;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .qr-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .qr-actions .btn {
+            width: 100%;
+            margin-top: 0 !important;
+        }
+
+        @media (max-width: 480px) {
+            .qr-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="../assets/images/icon.png">
+    <link rel="apple-touch-icon" href="../assets/images/icon-192.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dev-dz.github.io/student-dz/">
+    <meta property="og:title" content="Student DZ | الطالب الجزائري">
+    <meta property="og:description"
+        content="من أول تسجيلك إلى تخرجك، كل ما تحتاجه كطالب جزائري في مكان واحد. أدوات، جامعات، إقامات، خرائط، ومنصات.">
+    <meta property="og:image"
+        content="https://dev-dz.github.io/student-dz/assets/images/icon-512.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dev-dz.github.io/student-dz/">
+    <meta property="twitter:title" content="Student DZ | الطالب الجزائري">
+    <meta property="twitter:description"
+        content="من أول تسجيلك إلى تخرجك، كل ما تحتاجه كطالب جزائري في مكان واحد. أدوات، جامعات، إقامات، خرائط، ومنصات.">
+    <meta property="twitter:image"
+        content="https://dev-dz.github.io/student-dz/assets/images/icon-512.png">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/icon.png" alt="Student DZ Logo" width="32" height="32"
+                    style="border-radius: 8px;"> Student DZ
+            </a>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="../index.html" class="nav-link">الرئيسية</a>
+                <a href="../universities/index.html" class="nav-link">الجامعات</a>
+                <a href="../ecoles/index.html" class="nav-link">المدارس والمعاهد</a>
+                <a href="../residences/index.html" class="nav-link">الإقامات</a>
+                <a href="../transport/index.html" class="nav-link">النقل</a>
+                <a href="../tools/maps.html" class="nav-link">الخريطة</a>
+                <a href="../categories/tools.html" class="nav-link">الأدوات</a>
+                <a href="../categories/student-life.html" class="nav-link">الحياة الجامعية</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="icon-btn" id="themeToggle" aria-label="تبديل الوضع"><i
+                        class="fa-solid fa-moon"></i></button>
+                <button class="hamburger" id="menuToggle" aria-label="القائمة">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="tool-container">
+            <h1 class="section-title"><i class="fa-solid fa-qrcode"></i> إنشاء رمز استجابة سريعة</h1>
+            <p style="color:var(--text-muted); margin-bottom:20px;">قم بتحويل أي نص أو رابط إلى QR Code لطباعته أو
+                مشاركته.</p>
+
+            <textarea id="qrText" rows="4" placeholder="أدخل الرابط أو النص هنا..."></textarea>
+
+            <button class="btn" id="generateBtn" style="width:100%;"><i class="fa-solid fa-magic"></i> إنشاء
+                الرمز</button>
+
+            <div id="qrcode"></div>
+
+            <div class="qr-actions">
+                <button class="btn btn-outline" id="downloadBtn" style="display: none;"><i
+                        class="fa-solid fa-download"></i> تحميل الصورة</button>
+                <button class="btn btn-outline" id="shareBtn" style="display: none;"><i
+                        class="fa-solid fa-share-nodes"></i> مشاركة الرمز</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/storage.js"></script>
+
+    <script>
+        StorageApp.addRecent({ id: 'qr-gen', title: 'إنشاء QR Code', url: 'tools/qr-generator.html', icon: 'fa-solid fa-qrcode' });
+
+        const generateBtn = document.getElementById('generateBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        let qrcodeInstance = null;
+
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        function getQrCanvas() {
+            return document.querySelector('#qrcode canvas');
+        }
+
+        generateBtn.addEventListener('click', async () => {
+            const text = document.getElementById('qrText').value.trim();
+            if (!text) return alert("الرجاء إدخال نص أو رابط.");
+
+            if (typeof QRCode === 'undefined') {
+                generateBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحميل...';
+                generateBtn.disabled = true;
+                try {
+                    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js');
+                } catch (e) {
+                    alert('فشل في تحميل مكتبة QR');
+                    return;
+                } finally {
+                    generateBtn.innerHTML = '<i class="fa-solid fa-magic"></i> إنشاء الرمز';
+                    generateBtn.disabled = false;
+                }
+            }
+
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+
+            qrcodeInstance = new QRCode(qrContainer, {
+                text: text,
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            downloadBtn.style.display = 'inline-flex';
+            shareBtn.style.display = 'inline-flex';
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const canvas = getQrCanvas();
+            if (canvas) {
+                const url = canvas.toDataURL("image/png");
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'StudentDZ_QRCode.png';
+                a.click();
+            }
+        });
+
+        shareBtn.addEventListener('click', async () => {
+            const canvas = getQrCanvas();
+            const text = document.getElementById('qrText').value.trim();
+
+            if (!canvas || !text) return;
+
+            try {
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                const file = blob ? new File([blob], 'StudentDZ_QRCode.png', { type: 'image/png' }) : null;
+
+                if (file && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        title: 'رمز QR - Student DZ',
+                        text: 'رمز استجابة سريعة تم إنشاؤه بواسطة Student DZ',
+                        files: [file]
+                    });
+                    return;
+                }
+
+                if (navigator.share) {
+                    await navigator.share({
+                        title: 'رمز QR - Student DZ',
+                        text: text
+                    });
+                    return;
+                }
+
+                alert('المشاركة المباشرة غير مدعومة على هذا الجهاز. يمكنك استخدام زر تحميل الصورة ثم مشاركتها.');
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    alert('تعذر مشاركة الرمز. يمكنك تحميل الصورة ومشاركتها يدويًا.');
+                }
+            }
+        });
+    </script>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>
+                        <img src="../assets/images/icon.png" alt="Student DZ Logo" width="24" height="24"
+                            style="border-radius: 4px; vertical-align: middle;"> Student DZ
+                    </h3>
+                    <p>المنصة الرقمية الشاملة للطالب الجزائري. رفيقك من التسجيل إلى التخرج.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="../categories/tools.html">الأدوات</a></li>
+                        <li><a href="../universities/index.html">الجامعات</a></li>
+                        <li><a href="../ecoles/index.html">المدارس والمعاهد</a></li>
+                        <li><a href="../platforms/index.html">المنصات</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>قانوني</h3>
+                    <ul class="footer-links">
+                        <li><a href="../pages/about.html">عن المنصة</a></li>
+                        <li><a href="../pages/privacy.html">سياسة الخصوصية</a></li>
+                        <li><a href="../pages/contact.html">اتصل بنا</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="currentYear"></span> Student DZ. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+    <script src="../assets/js/navigation.js"></script>
+</body>
+
+</html>
