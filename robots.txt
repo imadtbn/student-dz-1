@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dev-dz.github.io/student-dz/sitemap.xml
